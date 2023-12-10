@@ -1,2 +1,74 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'variables';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+// Site
+.site-banner {
+    min-height: 100px;
+    .site-name {
+        color: $red-500;
+    }
+    .banner-header {
+        width: 100%;
+        max-height: 120px;
+    }
+}
+
+// Footer 
+.site-footer {
+    height: 352px;
+    .footer-title {
+        color: $white;
+        font-weight: 600;
+    }
+}
+
+// Back Ground: 
+.bg-red-primary {
+    background-color: $red-400;
+}
+.main-nav {
+    .navbar{
+        .nav-item {
+            margin: 1rem 1rem;
+            .nav-link {
+                color: $white;
+                font-weight: 600;
+            }
+        }
+        .search-input {
+            input {
+                &:focus {
+                    outline: none;
+                }
+                &::placeholder {
+                    color: $white;
+                }
+            }
+            i {
+                color: $white;
+                &:hover {
+                    color: $gray-800;
+                }
+            }
+        }
+    }
+}
+// Help box 
+.help-box { 
+    width: 100%;
+    max-width: 380px;
+    border: 1px solid $secondary;
+}
+
+
+
+@include media-breakpoint-up(sm) { 
+    .w-sm-25{
+        width: 25%;
+    }
+}
