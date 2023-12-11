@@ -7,11 +7,12 @@
 				@csrf
 				<input type="hidden" name="checkedboxcounter" id="checkedboxcounter" value="0">
 				<input type="hidden" id="task" name="task" value="{{ $request->input('task') }}">
+				<input type="hidden" id="index_category" name="index_category" value="{{ !empty($parent_category) ? $parent_category->id : '' }}">
 				<div class="px-5 pt-5r">
-					<h4 class="ms-5 fw-bold text-red-primary mb-3">ABOUT US</h4>
+					<h4 class="ms-5 fw-bold text-red-primary mb-3"> {{ !empty($parent_category) ? $parent_category->name : "Category hidden manager" }}</h4>
 					<div class="border rounded-3 px-3 py-4 mx-5 bg-white">
 						<div class="d-flex flex-wrap justify-content-between align-items-center">
-							<span class="fs-5 fw-semibold">Resources List</span>
+							<span class="fs-5 fw-semibold">Category List</span>
 							<div class="input-search-group border rounded-3 d-flex justify-content-center bg-white">
 								<input type="text" class="input-search-resources border-0 small rounded-3 ps-3" value="{{ $request->input('search_text') }}"  placeholder="Search..." name="search_text" id="search_text">
 								<button class="btn btn-search d-flex justify-content-center align-items-center px-2">
@@ -78,15 +79,58 @@
 									<a class="btn btn-outline-red-400 fw-semibold btn-remove-post me-3 btn-delete">
 										Delete
 									</a>
-									<a href="{{ url('/admin/categories/edit') }}" class="btn btn-red-400 btn-add-post">
-										Add new
-									</a>
+									@if (empty($parent_category))
+										<a href="{{ url('/admin/categories/edit') }}" class="btn btn-red-400 btn-add-post">
+											Add new
+										</a>
+									@else 
+										<!-- Button trigger modal -->
+										<a role="button" class="btn btn-red-400 btn-add-post" data-bs-toggle="modal" data-bs-target="#modal_add_new_cate">
+											Add new
+										</a>
+									@endif
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
+
+			<!-- Modal -->
+			<div class="modal fade" id="modal_add_new_cate" tabindex="-1" aria-labelledby="label_modal_add_new_cate" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5 text-center" id="label_modal_add_new_cate">Add new Category</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="d-flex flex-column">
+								<form action="{{ url('/admin/categories/edit') }}" class="custom-form" name="quick_form" id="quick_form" method="POST">
+									@csrf
+									<p>Type the name of the category</p>
+									<div class="mb-4">
+										<input type="text" id="new_category_name" name="new_category_name" class="rounded-3 custom-input bg-white" placeholder="Enter category name" value="" required>
+										<input type="hidden" id="new_category_parent_id" name="new_category_parent_id" value="{{ $parent_category->id }}" required>
+										<input type="hidden" id="new_category_level" name="new_category_level" value="{{ $parent_category->level+1 }}" required>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-red-400 bg-secondary py-2" data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-red-400 py-2 submit-quick-form">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	<script>
+		$(document).ready(function () {
+			$('.submit-quick-form').on('click', function(){
+				$('#quick_form').submit();
+			})
+		});
+	</script>
 @endsection

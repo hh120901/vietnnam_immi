@@ -11,20 +11,17 @@
 		<div class="d-flex flex-column flex-shrink-0 p-3 w-100" >
 			<a class="no-decor" href="{{ url('/admin') }}">
 				<div class="d-flex align-items-center">
-					<div class="logo-img ratio ratio-1x1">
-						<img src="{{ asset('storage/'.$settings->logo) }}" alt="logo">
-					</div>
-					<h4 class="fw-semibold ms-4 mb-0 text-danger text-nowrap">
-						VIETNAM <br> IMMI ORG
+					<h4 class="fw-semibold mb-0 text-danger text-nowrap">
+						Vietnam - immi.org.vn
 					</h4>
 				</div>
 			</a>
 			<hr>
 			<div>
-				<ul class="group-management mt-2 {{ (in_array($user->getRole->alias, $hr_role) || in_array($user->getRole->alias, $content_role)) ? '' : 'd-none' }}"><span class="d-flex align-items-center mb-3"><img class="me-2" src="{{ asset('assets/images/notes.svg') }}" alt="">Content management</span>
-					<li class="management-item"><a class="management-link" href="{{ url('/admin/about') }}">Services</a></li>
-					<li class="management-item"><a class="management-link" href="{{ url('/admin/about') }}">News</a></li>
-					<li class="management-item"><a class="management-link" href="{{ url('/admin/about') }}">Travel News</a></li>
+				<ul class="group-management mt-2 {{ (in_array($user->getRole->alias, $hr_role) || in_array($user->getRole->alias, $content_role)) ? '' : 'd-none' }}"><span class="d-flex align-items-center mb-3"><img class="me-2" src="{{ asset('assets/images/old_img/notes.svg') }}" alt="">Content management</span>
+					<li class="management-item"><a class="management-link" href="{{ url('/admin/services') }}">Services</a></li>
+					<li class="management-item"><a class="management-link" href="{{ url('/admin/news') }}">News</a></li>
+					<li class="management-item"><a class="management-link" href="{{ url('/admin/travel-news') }}">Travel News</a></li>
 				</ul>
 				<ul class="group-management {{ (in_array($user->getRole->alias, $cs_role)) ? '' : 'd-none' }}">
 					<span class="d-flex align-items-center mb-3">
@@ -42,6 +39,11 @@
 					<li class="management-item {{ (in_array($user->getRole->alias, $admin_role)) ? '' : 'd-none' }}"><a class="management-link" href="{{ url('/admin/roles') }}">User Roles</a></li>
 					<li class="management-item {{ (in_array($user->getRole->alias, $cs_role)) ? '' : 'd-none' }}"><a class="management-link" href="{{ url('/admin/contact') }}">Request Contact Us</a></li>
 				</ul>
+				<ul class="group-management mt-2"><span class="d-flex align-items-center mb-3"><img class="me-2" src="{{ asset('assets/images/old_img/notes.svg') }}" alt="">Categories management</span>
+					<li class="management-item"><a class="management-link" href="{{ url('/admin/categories/index/16') }}">Services</a></li>
+					<li class="management-item"><a class="management-link" href="{{ url('/admin/categories/index/17') }}">News</a></li>
+					<li class="management-item"><a class="management-link" href="{{ url('/admin/travel-news') }}">Travel News</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -58,7 +60,6 @@
 						$(this).removeClass('active');
 					}
 				})
-
 			}
 			checkUrl();
 		});

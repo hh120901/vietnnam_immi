@@ -36,7 +36,7 @@ class Syslog extends Controller
 				if (!Auth::check() || Auth::user()->active != 1) {
 					return redirect()->route('syslog.login');
 				}
-				Auth::user()->last_activity = date('d-m-Y H:i:s');
+				Auth::user()->last_activity = date('Y-m-d H:i:s');
 				Auth::user()->save();
 			}
 			return $next($request);
@@ -165,7 +165,7 @@ class Syslog extends Controller
 			}
 		}
 	}
-	
+	// Control all category
 	public function categories(Request $request, Client $client, $action='index', $id=null)
 	{
 		if (in_array(Auth::user()->getRole->alias, $this->admin_role)) {
@@ -211,10 +211,22 @@ class Syslog extends Controller
 							->with('categories', $categories);
 			}
 			else {
-				$categories = PostCategory::where('name', 'like', '%'.$request->input('search_text').'%')
-											->orderByDesc('created_at')->paginate(5);
+				$parent_category = null;
+				if (!empty($id)) {
+					$parent_category = PostCategory::find($id);
+					if ($parent_category) {
+						$categories = PostCategory::where('parent_id', $parent_category->id)
+												->where('name', 'like', '%'.$request->input('search_text').'%')
+												->orderByDesc('created_at')->paginate(5);
+					}
+				} else {
+					$categories = PostCategory::where('name', 'like', '%'.$request->input('search_text').'%')
+												->orderByDesc('created_at')->paginate(5);
+				}
+		
 				return view('admin.categories.'.$action)
 							->with('request', $request)
+							->with('parent_category', $parent_category)
 							->with('categories', $categories);
 			}
 		}
