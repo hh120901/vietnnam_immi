@@ -1,0 +1,32 @@
+.post-featured {
+	max-height: 280px;
+}
+.post-excerpt {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	-webkit-line-clamp: 5;
+}
+.related-posts {
+	.related-post {
+		transition: transform 0.5s linear;
+		&:hover {
+			transform: scale(1.05);
+		}
+		.related-post-featured {
+			max-height: 180px;
+		}
+		.related-post-excerpt {
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			-webkit-line-clamp: 4;
+		}
+	}
+}
+.img-featured {
+	width: 100%;
+	img {
+		width: 100%;
+	}
+}

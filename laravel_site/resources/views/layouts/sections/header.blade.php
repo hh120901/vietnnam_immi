@@ -2,14 +2,18 @@
 	<div class="site-banner mb-3 container">
 		<div class="row h-100 position-relative overflow-hidden">
 			<div class="col-lg-4 d-none d-lg-flex align-items-center justify-content-center">
-				<div class="">
-					<h2 class="site-name">Vietnam - immi.org.vn</h2>
-				</div>
+				<a href="{{ url('/') }}" class="no-decor">
+					<div class="">
+						<h2 class="site-name">Vietnam - immi.org.vn</h2>
+					</div>
+				</a>
 			</div>
 			<div class="col-lg-8 h-100">
-				<div class="banner-header ratio ratio-1x1">
-					<img src="{{ asset('assets/images/banners/header-banner.png') }}" alt="banner">
-				</div>
+				<a href="{{ url('/') }}" class="no-decor">
+					<div class="banner-header ratio ratio-1x1">
+						<img src="{{ asset('assets/images/banners/header-banner.png') }}" alt="banner">
+					</div>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -30,21 +34,22 @@
 								Services
 								</a>
 								<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Action</a></li>
-								<li><a class="dropdown-item" href="#">Another action</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="#">Something else here</a></li>
+									<li><a class="dropdown-item drop-link" href="#">Visa</a></li>
+									<li><a class="dropdown-item drop-link" href="#">5 Years</a></li>
+									<li><a class="dropdown-item drop-link" href="#">Airport Services</a></li>
+									<li><a class="dropdown-item drop-link" href="#">E sim</a></li>
+									<li><a class="dropdown-item drop-link" href="#">Extend Visa</a></li>
 								</ul>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="#">News</a>
+								<a class="nav-link active" aria-current="page" href="{{ url('/news') }}">News</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#">Travel</a>
 							</li>
 							
 							<li class="nav-item">
-								<a class="nav-link disabled" aria-disabled="true">Contact</a>
+								<a class="nav-link" href="{{ url('/contact') }}">Contact</a>
 							</li>
 						</ul>
 						<form class="d-flex" role="search">

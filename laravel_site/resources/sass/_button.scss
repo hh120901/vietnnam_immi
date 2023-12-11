@@ -1,0 +1,28 @@
+.btn-red-400 {
+	background-color: $red-400;
+	color: white;
+	font-weight: 700;
+	line-height: 21px;
+	&:hover {
+		background-color: darken($red-400, 20%);
+		color: $white;
+	}
+}
+.btn-outline-red-400 {
+	background-color: white;
+	color: $red-400;
+	border: 1px solid $red-400;
+	transition: background-color 0.3s linear ;
+	&:hover {
+		background-color: $red-400 !important;
+		color: $white;
+	}
+}
+.btn-remove-post,
+.btn-add-post {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 10rem;
+	height: 50px;
+}

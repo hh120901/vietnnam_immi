@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5 pt-3">
     <div class="site-footer bg-red-primary">
         <div class="row justify-content-between">
             <div class="col-lg-7 px-3">

@@ -1,10 +1,39 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'variables';
+@import 'swiper';
+@import 'posts';
+@import 'admin';
+@import 'button';
+@import 'input';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+}
+// Text
+.text-oneline {
+    display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	-webkit-line-clamp: 1;
+}
+.no-decor {
+    text-decoration: none;
+    color: $black;
+}
+.text-second {
+    color: $secondary;
+}
+.lh-30 {
+    line-height: 30px;
+}
+.lh-24 {
+    line-height: 24px;
 }
 // Site
 .site-banner {
@@ -64,11 +93,59 @@
     max-width: 380px;
     border: 1px solid $secondary;
 }
+.related-box {
+    width: 100%;
+    max-width: 380px;
+    border: 1px solid $secondary;
+}
+.related-posts {
+    width: 100%;
+    max-width: 380px;
+}
+.list-type-none {
+    list-style-type: none;
+}
 
+// drop-zone 
+.drop-zone {
+	&.drag-over {
+		border: 2px dashed blueviolet;
+		border-radius: 0.5rem;
+		opacity: 0.5;
+	}
+	&.error {
+		border: 2px solid red;
+	}
+}
 
+.custom-telinput {
+    .iti.iti--allow-dropdown.iti--separate-dial-code.iti--show-flags {
+        width: 100%;
+    }
+    .iti--separate-dial-code .iti__selected-flag {
+        background-color: rgb(255 247 247 / 5%);
+    }
+}
+.area-input {
+    height: 150px;
+}
+.custom-input, .custom-textarea {
+    &.error {
+        border: 1px solid red;
+    }
+}
+.drop-link {
+    &:hover {
+        font-weight: 600;
+        text-decoration: underline;
+    }
+}
 
 @include media-breakpoint-up(sm) { 
     .w-sm-25{
         width: 25%;
+    }
+    .w-sm-75{
+        width: 75%;
     }
 }

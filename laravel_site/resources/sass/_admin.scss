@@ -1,0 +1,67 @@
+.sidebar {
+	width: 300px;
+	height: 1024px;
+	.logo-img {
+		width: 58px;
+		height: 58px;
+	}
+	.group-management {
+		padding: 0;
+		li {
+			margin-bottom: 20px;
+			margin-left: 3.2rem;
+			a {
+				text-decoration: none;
+				color: $black;
+				font-size: 14px;
+				font-weight: 400;
+				&.active {
+					color: $red-400;
+					font-weight: 600;
+				}
+			}
+			&:first-child {
+				margin-top: 20px;
+			}
+			&:hover {
+				a {
+					color: $red-400;
+					font-weight: 600;
+				}
+			}
+		}
+	}
+}
+.head-bar {
+	height: 60px;
+	background: white;
+}
+.badge-notifi {
+	top: 4px;
+}
+.post-status {
+	&.active {
+		color: #00A611;
+	}
+}
+.box-avatar {
+	width: 115px;
+	height: 115px;
+	img {
+		border-radius: 100%;
+	}
+}
+
+.todc-pagination {
+	.page-item {
+		color: $gray-800;
+		border-right: 1px solid $gray-400;
+		&.disabled {
+			color: $gray-400;
+		}
+		&.active {
+			font-weight: 700;
+			color: $secondary;
+		}
+	}
+}
