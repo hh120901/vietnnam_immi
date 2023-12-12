@@ -33,6 +33,9 @@
 		.text-red-primary {
 			color: #9C0B0B;
 		}
+		.text-red-400 {
+			color: #DE3737;
+		}
 		.fw-bold {
 			font-weight: 700;
 		}
@@ -70,16 +73,14 @@
 		$settings = \App\Models\Setting::where('active', 1)->first();
 	@endphp
 	<div class="container">
-		<div class="d-flex mb-5" style="gap: 20px; align-items: center;">
-			<a href="{{ url('/') }}"><img src="{{ asset('assets/images/logo_site.png') }}" width="64" alt="logo img"></a>
-			<a href="{{ url('/') }}"><h4 class="fw-semibold" style="padding-bottom: 0.5rem">THE ONE <br> DIGI CORP</h4></a>
+		<div class="d-flex mb-5">
+			<a href="{{ url('/') }}" style="text-decoration: none;"><h2 class="fw-semibold text-red-400" style="padding-bottom: 0.5rem; font-size: 2rem;">Vietnam- Immi.org.vn</h2></a>
 		</div>
 		@yield('content')
 		<div>
 			<h4 class="fw-bold fs-4">Best Regards,</h4>
-			<div class="d-flex" style="gap: 20px; align-items: center;">
-				<a href="{{ url('/') }}" style="margin-right: 1rem"><img src="{{ asset('assets/images/logo_site.png') }}" width="64" alt="logo img"></a>
-				<a href="{{ url('/') }}"><h4 class="fw-semibold" style="padding-bottom: 0.5rem">THE ONE <br> DIGI CORP</h4></a>
+			<div class="mb-5">
+				<a href="{{ url('/') }}" style="text-decoration: none;"><h2 class="fw-semibold text-red-400" style="padding-bottom: 0.5rem; font-size: 2rem;">Vietnam- Immi.org.vn</h2></a>
 			</div>
 			<p class="mb-3"><strong>Address: </strong>{{ $settings->company_address }}</p>
 			<p class="mb-3"><strong>Hotline: </strong>{{ $settings->company_phone }}</p>

@@ -8,7 +8,7 @@
 		<h2 class="fs-2 text-red-primary mb-4">Thank You for Your Inquiry</h2>
 		<p class="mb-3">Dear <strong>{{ $data->tpl_data->name }}</strong>,</p>
 		<p class="mb-4">Thank you for reaching out to us and providing the requested information. We have received your inquiry and are currently reviewing the details.</p>
-		<p class="mb-3">Your inquiry:</p>
+		<p class="mb-3"><strong>Your inquiry:</strong></p>
 		<p class="mb-4">{{ $data->tpl_data->message }}</p>
 		<p class="mb-3">
 			We assure you that we will provide feedback or address 

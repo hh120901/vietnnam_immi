@@ -4,37 +4,27 @@
 <section>
 	<div class="container">
 		<div class="row px-0 mb-5 mx-sm-4">
-			<div class="col-lg-8 px-sm-0">
+			<div class="col-lg-8 px-sm-0 mb-3">
 				<div class="w-100 h-100">
 					{{-- Swiper --}}
 					<div class="h-100 me-lg-4">
 						<div class="swiper mySwiper bg-light">
 							<div class="swiper-wrapper">
-								<div class="swiper-slide ratio ratio-1x1 sl2">
-									<a href="#">
-										<img class="brightness" src="{{ asset('assets/images/banners/slide-banner1.jpg') }}" alt="banner-image">
-									</a>
-								</div>
-								<div class="swiper-slide ratio ratio-1x1 sl2">
-									<a href="#">
-										<img class="brightness" src="{{ asset('assets/images/banners/slide-banner2.jpg') }}" alt="banner-image">
-									</a>
-								</div>
-								<div class="swiper-slide ratio ratio-1x1 sl2">
-									<a href="#">
-										<img class="brightness" src="{{ asset('assets/images/banners/slide-banner3.jpg') }}" alt="banner-image">
-									</a>
-								</div>
-								<div class="swiper-slide ratio ratio-1x1 sl2">
-									<a href="#">
-										<img class="brightness" src="{{ asset('assets/images/banners/slide-banner4.jpg') }}" alt="banner-image">
-									</a>
-								</div>
-								<div class="swiper-slide ratio ratio-1x1 sl2">
-									<a href="#">
-										<img class="brightness" src="{{ asset('assets/images/banners/slide-banner5.jpg') }}" alt="banner-image">
-									</a>
-								</div>
+								@if (empty($homeBanners))
+									<div class="swiper-slide ratio ratio-1x1">
+										<a href="#">
+											<img class="brightness" src="{{ asset('assets/images/banners/slide-banner1.jpg') }}" alt="banner-image">
+										</a>
+									</div>
+								@else
+									@foreach ($homeBanners as $banner)
+										<div class="swiper-slide ratio ratio-1x1">
+											<a href="{{ $banner->url }}">
+												<img class="brightness" src="{{ asset('storage/'.$banner->image) }}" alt="banner-image">
+											</a>
+										</div>
+									@endforeach
+								@endif
 							</div>
 							<div class="swiper-pagination"></div>
 							{{-- custom navigation --}}
@@ -71,22 +61,18 @@
 		<div class="mx-sm-4 mt-5 pt-3">
 			<h2 class="fw-bold mb-4">News of Vietnam Travel</h2>
 			<ol>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
+				@foreach ($travel_news_posts as $travel_post)
+					<li class="mb-3"><a class="text-second fw-medium" href="{{ url('/'.$travel_news_posts->cat->alias.'/'.$travel_post->slug) }}">{{ $travel_post->title }}</a></li>
+				@endforeach
 			</ol>
 		</div>
 
 		<div class="mx-sm-4 mt-5 pt-3">
 			<h2 class="fw-bold mb-4">News of Vietnam Visa and Airport Services </h2>
 			<ol>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
-				<li class="mb-3"><a class="text-second fw-medium" href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></li>
+				@foreach ($visa_airport_news_posts as $v_a_post)
+					<li class="mb-3"><a class="text-second fw-medium" href="{{ url('/'.$visa_airport_news_posts->{$v_a_post->category_id}->alias.'/'.$v_a_post->slug) }}">{{ $v_a_post->title }}</a></li>
+					@endforeach
 			</ol>
 		</div>
 	</div>

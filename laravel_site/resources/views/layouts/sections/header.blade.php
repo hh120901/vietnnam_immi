@@ -1,3 +1,7 @@
+@php
+	$settings = \App\Models\Setting::first();
+	$banner = \App\Models\Banner::where('position', 'header')->first();
+@endphp
 <header class="mb-5">
 	<div class="site-banner mb-3 container">
 		<div class="row h-100 position-relative overflow-hidden">
@@ -9,9 +13,9 @@
 				</a>
 			</div>
 			<div class="col-lg-8 h-100">
-				<a href="{{ url('/') }}" class="no-decor">
+				<a href="{{ $banner->url }}" class="no-decor">
 					<div class="banner-header ratio ratio-1x1">
-						<img src="{{ asset('assets/images/banners/header-banner.png') }}" alt="banner">
+						<img src="{{ asset('storage/'.$banner->image)}}" alt="banner">
 					</div>
 				</a>
 			</div>
@@ -45,7 +49,7 @@
 								<a class="nav-link active" aria-current="page" href="{{ url('/news') }}">News</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">Travel</a>
+								<a class="nav-link" href="{{ url('/travel-news') }}">Travel</a>
 							</li>
 							
 							<li class="nav-item">

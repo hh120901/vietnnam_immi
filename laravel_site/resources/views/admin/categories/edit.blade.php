@@ -18,22 +18,28 @@
 										</label>
 										<input type="text" id="category_name" name="category_name" class="rounded-4 custom-input bg-white" placeholder="Enter name" value="{{ $category->name }}" required>
 									</div>
-									<div class="mb-4">
+									{{--<div class="mb-4">
 										<label for="alias">
 											<h6 class="small fw-bold mb-3">Category Alias <span class="text-danger">*</span></h6>
 										</label>
 										<input type="text" id="alias" name="alias" class="rounded-4 custom-input bg-white" placeholder="Enter name" value="{{ $category->alias }}" required>
+									</div>--}}
+									<div class="mb-4 {{ !empty($category->id) ? 'd-none' : '' }}">
+										<label for="level">
+											<h6 class="small fw-bold mb-3">Level</h6>
+										</label>
+										<input type="number" id="level" name="level" class="rounded-4 custom-input bg-white" placeholder="" value="{{ !empty($category->level) ? $category->level : '1' }}">
 									</div>
 									<div class="mb-4">
 										<label for="parent_id">
 											<h6 class="small fw-bold mb-3">Parent Category <span class="text-danger">*</span></h6>
 										</label>
-										<select class="form-select custom-select" name="parent_id" id="parent_id">
+										<select class="form-select custom-select" name="parent_id" id="parent_id" {{ !empty($category->id) ? 'disabled' : '' }}>
 											<option value="">None</option>
 												@foreach ($categories as $cat)
 													<option value="{{ $cat->id }}" {{ $cat->id == $category->parent_id ? 'selected' : '' }}>{{ $cat->name }}</option>
 												@endforeach
-										  </select>
+										</select>
 									</div>
 								</div>
 							</div>

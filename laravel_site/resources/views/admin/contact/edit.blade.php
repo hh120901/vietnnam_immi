@@ -48,6 +48,18 @@
 								</label>
 								<textarea name="description" id="description" class="custom-textarea bg-white disabled" cols="30" rows="6" readonly>{{ $contact->message }}</textarea>
 							</div>
+							@if (!empty($contact->attachment))
+								@php
+									$path = asset('storage/'.$contact->attachment);
+									$filename =basename($path);
+								@endphp	
+								<div class="mb-4">
+									<label for="title">
+										<h6 class="small fw-bold mb-3">Attach: </h6>
+									</label>
+									<a href="{{ $path }}" title="View attach detail" target="_blank">View</a>
+								</div>
+							@endif
 						</div>
 					</div>
 					{{-- Show Reply Information --}}
@@ -62,11 +74,12 @@
 										<h6 class="small fw-bold mb-3">Staff <span class="text-danger">*</span></h6>
 									</label>
 									@php
+								
 										if (!empty($reply)) {
 											$staff = \App\Models\User::find($reply->user_id);
 										}
 									@endphp
-									<input type="text" id="staff_name" name="staff_name" class="rounded-4 custom-input disabled bg-white" value="{{ $staff->name ?? (auth()->user()->firstname.' '.auth()->user()->lastname) }}" readonly>
+									<input type="text" id="staff_name" name="staff_name" class="rounded-4 custom-input disabled bg-white" value="{{ empty($staff) ? (auth()->user()->firstname.' '.auth()->user()->lastname) : $staff->firstname. ' ' . $staff->lastname }}" readonly>
 								</div>
 							</div>
 							<div class="col-lg-6">

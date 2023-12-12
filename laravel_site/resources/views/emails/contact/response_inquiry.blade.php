@@ -9,8 +9,8 @@
 		<p class="mb-3">Dear <strong>{{ $data->tpl_data->contact->name }},</strong>,</p>
 		<p class="mb-4">Thank you for reaching out to us and sharing your concerns regarding our service. We appreciate your interest and want to ensure that any issues you have are addressed promptly and effectively.</p>
 		<p class="mb-3">Below are the answers to the questions you raised:</p>
-		<p class="mb-3">Your inquiry: {{ $data->tpl_data->contact->message }}</p>
-		<p class="mb-4">Our solution: {{ $data->tpl_data->reply->message }}</p>
+		<p class="mb-3"><strong>Your inquiry:</strong> {{ $data->tpl_data->contact->message }}</p>
+		<p class="mb-4"><strong>Our solution:</strong> {{ $data->tpl_data->reply->message }}</p>
 		<p class="mb-3">
 			We understand the importance of your 
 			queries and want to ensure your complete satisfaction. 

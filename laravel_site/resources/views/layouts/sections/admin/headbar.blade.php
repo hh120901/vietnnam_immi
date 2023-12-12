@@ -1,18 +1,15 @@
 @php
-	$new_applicants = \App\Models\MailDB::where('type', 'career')->where('active', 0)->get();
 	$new_contacts = \App\Models\MailDB::where('type', 'contact')->where('active', 0)->get();
-	$count_career = count($new_applicants) ?? 0;
 	$count_contact = count($new_contacts) ?? 0;
-	$new_counter = $count_career + $count_contact;
 @endphp
 
 <div class="head-bar">
 	<div class="d-flex align-items-center justify-content-end pe-4 h-100">
 		<div class="">
 			<button class="btn p-0 me-4 position-relative" data-bs-toggle="dropdown" aria-expanded="false">
-				<img class="pt-1" src="{{ asset('assets/images/icon-notifi.svg') }}" alt="">
-				<span class="position-absolute start-100 translate-middle badge rounded-pill bg-red-400 badge-notifi">
-					{{ $new_counter }}
+				<img class="pt-1" src="{{ asset('assets/images/old_img/icon-notifi.svg') }}" alt="">
+				<span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger badge-notifi">
+					{{ $count_contact }}
 					<span class="visually-hidden">unread messages</span>
 				</span>
 			</button>

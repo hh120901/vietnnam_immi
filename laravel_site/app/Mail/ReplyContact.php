@@ -28,7 +28,7 @@ class ReplyContact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address($this->data->sender, 'TODC - Customer Support'),
+            from: new Address($this->data->sender, 'VNIM - Customer Support'),
             subject: $this->data->subject,
 			replyTo: $this->data->sender,
 			to: $this->data->receivers,

@@ -27,6 +27,27 @@
 										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
 									</div>
 									<div class="mb-4">
+										<label for="hotline_vn">
+											<h6 class="small fw-bold mb-3">Hotline VN <span class="text-danger">*</span></h6>
+										</label>
+										<input type="text" id="hotline_vn" name="hotline_vn" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->hotline_vn }}">
+										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
+									</div>
+									<div class="mb-4">
+										<label for="hotline_en">
+											<h6 class="small fw-bold mb-3">Hotline EN <span class="text-danger">*</span></h6>
+										</label>
+										<input type="text" id="hotline_en" name="hotline_en" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->hotline_en }}">
+										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
+									</div>
+									<div class="mb-4">
+										<label for="hotline_usa">
+											<h6 class="small fw-bold mb-3">Hotline USA <span class="text-danger">*</span></h6>
+										</label>
+										<input type="text" id="hotline_usa" name="hotline_usa" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->hotline_usa }}">
+										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
+									</div>
+									<div class="mb-4">
 										<label for="company_email">
 											<h6 class="small fw-bold mb-3">Company Mail <span class="text-danger">*</span></h6>
 										</label>
@@ -46,19 +67,41 @@
 							<div class="col-lg-6">
 								<div class="px-3">
 									<div class="mb-4">
-										<label for="hr_email">
-											<h6 class="small fw-bold mb-3">Hr email <span class="text-danger">*</span></h6>
-										</label>
-										<input type="text" id="hr_email" name="hr_email" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->hr_email }}">
-										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
-									</div>
-									<div class="mb-4">
 										<label for="cs_email">
 											<h6 class="small fw-bold mb-3">Cs email <span class="text-danger">*</span></h6>
 										</label>
 										<input type="text" id="cs_email" name="cs_email" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->cs_email }}">
 										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
 									</div>
+									<div class="mb-4">
+										<label for="whatsapp">
+											<h6 class="small fw-bold mb-3">Whats app <span class="text-danger">*</span></h6>
+										</label>
+										<input type="text" id="whatsapp" name="whatsapp" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->whatsapp }}">
+										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
+									</div>
+									<div class="mb-4">
+										<label for="skype">
+											<h6 class="small fw-bold mb-3">Skype <span class="text-danger">*</span></h6>
+										</label>
+										<input type="text" id="skype" name="skype" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->skype }}">
+										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
+									</div>
+									<div class="mb-4">
+										<label for="viber">
+											<h6 class="small fw-bold mb-3">Viber <span class="text-danger">*</span></h6>
+										</label>
+										<input type="text" id="viber" name="viber" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->viber }}">
+										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
+									</div>
+									<div class="mb-4">
+										<label for="telegram">
+											<h6 class="small fw-bold mb-3">Telegram <span class="text-danger">*</span></h6>
+										</label>
+										<input type="text" id="telegram" name="telegram" class="rounded-4 custom-input required bg-white" placeholder="" value="{{ $setting->telegram }}">
+										<span class="input-error fw-semibold text-danger d-none">This field is required!</span>
+									</div>
+
 									<div class="mb-4">
 										<label for="logo">
 											<h6 class="small fw-bold mb-3">Logo <span class="text-danger">*</span></h6>

@@ -100,27 +100,28 @@
 			<div class="modal fade" id="modal_add_new_cate" tabindex="-1" aria-labelledby="label_modal_add_new_cate" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5 text-center" id="label_modal_add_new_cate">Add new Category</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="d-flex flex-column">
-								<form action="{{ url('/admin/categories/edit') }}" class="custom-form" name="quick_form" id="quick_form" method="POST">
-									@csrf
-									<p>Type the name of the category</p>
-									<div class="mb-4">
-										<input type="text" id="new_category_name" name="new_category_name" class="rounded-3 custom-input bg-white" placeholder="Enter category name" value="" required>
-										<input type="hidden" id="new_category_parent_id" name="new_category_parent_id" value="{{ $parent_category->id }}" required>
-										<input type="hidden" id="new_category_level" name="new_category_level" value="{{ $parent_category->level+1 }}" required>
-									</div>
-								</form>
+						<form action="{{ url('/admin/categories/edit') }}" class="custom-form" name="quick_form" id="quick_form" method="POST">
+							@csrf
+							<div class="modal-header">
+								<h1 class="modal-title fs-5 text-center" id="label_modal_add_new_cate">Add new Category</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-red-400 bg-secondary py-2" data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-red-400 py-2 submit-quick-form">Save</button>
-						</div>
+							<div class="modal-body">
+								<div class="d-flex flex-column">
+										<p>Type the name of the category</p>
+										<div class="mb-4">
+											<input type="text" id="new_category_name" name="new_category_name" class="rounded-3 custom-input bg-white" placeholder="Enter category name" value="" required>
+											<input type="hidden" id="quick_task" name="quick_task" value="add_new_cat">
+											<input type="hidden" id="new_category_parent_id" name="new_category_parent_id" value="{{ $parent_category->id ?? '' }}">
+											<input type="hidden" id="new_category_level" name="new_category_level" value="{{ !empty($parent_category->level) ? $parent_category->level+1 : '' }}">
+										</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-red-400 bg-secondary py-2" data-bs-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-red-400 py-2 submit-quick-form">Save</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

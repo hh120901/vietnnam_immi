@@ -17,47 +17,47 @@
 						<form action="" id="form_contact" name="form_contact" method="POST" enctype="multipart/form-data">
 							@csrf
 							<div class="mb-4">
-								<label for="title">
+								<label for="contact_name">
 									<h6 class="fw-bold mb-3">Fullname <span class="text-danger">*</span></h6>
 								</label>
-								<input type="text" id="title" name="title" class="rounded-1 border-2 form-control custom-input required bg-white" placeholder="Enter your name">
+								<input type="text" id="contact_name" name="contact_name" class="rounded-1 border-2 form-control custom-input required bg-white" placeholder="Enter your name">
 									<span class="text-danger fw-semibold error-input d-none small">* This field is required!</span>
 							</div>
 							<div class="mb-4">
-								<label for="title">
+								<label for="contact_email">
 									<h6 class="fw-bold mb-3">Email <span class="text-danger">*</span></h6>
 								</label>
-								<input type="email" id="title" name="title" class="rounded-1 border-2 form-control custom-input required bg-white" placeholder="Enter your email">
+								<input type="email" id="contact_email" name="contact_email" class="rounded-1 border-2 form-control custom-input required bg-white" placeholder="Enter your email">
 									<span class="text-danger fw-semibold error-input d-none small">* This field is required!</span>
 							</div>
 							<div class="mb-4 custom-telinput">
-								<label for="title">
+								<label for="contact_phone">
 									<h6 class="fw-bold mb-3">Phone <span class="text-danger">*</span></h6>
 								</label>
-								<input type="text" id="title" name="title" class="form-control custom-input required rounded-1 border-2 telinput bg-white" >
+								<input type="text" id="contact_phone" name="contact_phone" class="form-control custom-input required rounded-1 border-2 telinput bg-white" >
 								<input type="hidden" name="dialcode" id="dialcode" value="">
 								<span class="text-danger fw-semibold error-input-phone d-none small">* This field is required!</span>
 								<span class="text-danger fw-semibold phone-error small"></span>
 							</div>
 							<div class="mb-4">
-								<label for="title">
+								<label for="contact_subject">
 									<h6 class="fw-bold mb-3">Subject <span class="text-danger">*</span></h6>
 								</label>
-								<input type="text" id="title" name="title" class="rounded-1 border-2 form-control custom-input required bg-white" placeholder="Enter your name">
+								<input type="text" id="contact_subject" name="contact_subject" class="rounded-1 border-2 form-control custom-input required bg-white" placeholder="Enter your subject">
 								<span class="text-danger fw-semibold error-input d-none small">* This field is required!</span>
 							</div>
 							<div class="mb-4">
-								<label for="title">
+								<label for="contact_message">
 									<h6 class="fw-bold mb-3">Message <span class="text-danger">*</span></h6>
 								</label>
-								<textarea id="title" name="title" class="rounded-1 border-2 custom-textarea required area-input form-control bg-white" placeholder="Enter your message"></textarea>
+								<textarea id="contact_message" name="contact_message" class="rounded-1 border-2 custom-textarea required area-input form-control bg-white" placeholder="Enter your message"></textarea>
 								<span class="text-danger fw-semibold error-input d-none small">* This field is required!</span>
 							</div>
 							<div class="apply-input-group mb-4">
 								<label for="input_file">
 									<h6 class="small fw-bold">Attach file (optional)</h6>
 								</label>
-								<input type="file" id="input_file" name="input_file" accept=".pdf, .jpg, .png, .doc" class="d-none input-file required">
+								<input type="file" id="input_file" name="input_file" accept=".pdf, .jpg, .png, .doc" class="d-none input-file">
 								<div class="drop-zone">
 									<div class="d-flex flex-column justify-content-center align-items-center border rounded-1 py-4">
 										<p class="mb-2"><i class="fal fa-file-upload fs-4"></i></p>
@@ -67,7 +67,7 @@
 								<p class="file-name my-3 fw-semibold text-success"></p>
 							</div>
 							
-							<button type="button" class="btn btn-danger form-control rounded-1 btn-submit-contact">
+							<button type="button" class="btn btn-danger form-control rounded-1 btn-submit-contact mb-4">
 								Send message
 							</button>
 						</form>

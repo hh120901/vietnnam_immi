@@ -4,11 +4,13 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Banner;
 use App\Models\MailDB;
 use GuzzleHttp\Client;
 use App\Models\Setting;
 use App\Models\UserRole;
 use App\Mail\ReplyContact;
+use Illuminate\Support\Str;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,7 +32,7 @@ class Syslog extends Controller
 		$this->admin_role = ['admin'];
 		$this->hr_role = ['admin', 'hr'];
 		$this->content_role = ['admin', 'content'];
-		$this->cs_role = ['admin', 'cs', 'content'];
+		$this->cs_role = ['admin', 'cs'];
 		$this->middleware(function ($request, $next) {
 			if (!in_array($request->route()->getName(), array('syslog.login'))) {
 				if (!Auth::check() || Auth::user()->active != 1) {
@@ -153,7 +155,7 @@ class Syslog extends Controller
 			if (in_array(Auth::user()->getRole->alias, $this->admin_role)) {
 				$roles = UserRole::all();
 				$users = User::where('firstname', 'like', '%'.$request->input('search_text').'%')
-											->where('lastname', 'like', '%'.$request->input('search_text').'%')
+											->orWhere('lastname', 'like', '%'.$request->input('search_text').'%')
 											->orderByDesc('created_at')->paginate(10);
 				return view('admin.users.'.$action)
 							->with('request', $request)
@@ -166,27 +168,65 @@ class Syslog extends Controller
 		}
 	}
 	// Control all category
+	public function check_alias_category($alias, $class)
+	{
+		if ($class == 'PostCategory') {
+			$db_alias = PostCategory::where('alias', $alias)->get();
+		}
+		if (empty($db_alias)){
+			return 0;
+		}
+		else {
+			return count($db_alias);
+		}
+	}
+	public function create_slug($title) 
+	{
+		$slug = Str::slug($title);
+		$db_slug = Post::where('slug', $slug)->get();
+		if (count($db_slug)) {
+			$slug = $slug.'-'.count($db_slug)+1;
+		}
+		return $slug;
+	}
 	public function categories(Request $request, Client $client, $action='index', $id=null)
 	{
 		if (in_array(Auth::user()->getRole->alias, $this->admin_role)) {
 			if ($request->isMethod('post')) {
+				if (!empty($request->input('quick_task'))) {
+					if ($request->input('quick_task') == 'add_new_cat') {
+						$category = PostCategory::firstOrNew(['id' => $id]);
+						$category->name = $request->input('new_category_name');
+						$alias =  Str::slug($category->name, '-');
+						$checkAlias = $this->check_alias_category($alias, 'PostCategory');
+						$category->alias = $checkAlias != 0 ? $alias.'-'.$checkAlias+1 : $alias;
+						$category->parent_id = $request->input('new_category_parent_id') ?? null;
+						$category->level = $request->input('new_category_level') ?? null;
+						$category->active = 1;
+						$category->save();
+					}
+					return redirect()->back()->with(['success' => 'Added category '. $category->name]);
+				}
 				$task = $request->input('task');
 				if ($action == 'edit') {
 					if (in_array($task, array('save', 'save-edit'))) {
 						$category = PostCategory::firstOrNew(['id' => $id]);
 						$category->name = $request->input('category_name');
-						$category->alias = $request->input('alias');
+						$alias =  Str::slug($category->name, '-');
+						$checkAlias = $this->check_alias_category($alias, 'PostCategory');
+						$category->alias = $checkAlias != 0 ? $alias.'-'.$checkAlias+1 : $alias;
+						$category->level = ($request->input('level')) ?? 1;
 						$category->parent_id = $request->input('parent_id') ?? null;
 						$category->description = $request->input('description');
 						$category->active = !empty($request->input('active')) ? 1 : 0;
 						$category->save();
-	
+
 						if ($task == 'save-edit') {
 							return redirect(url()->current());
 						}
 					}
 					
-					return redirect()->route('syslog.categories');
+					return redirect(url('/admin/categories/index/'.$request->input('parent_id')))->with(['success' => 'Updated category '. $category->name]);
 				}
 				else {
 					$ids = $request->input('cid', array());
@@ -197,6 +237,7 @@ class Syslog extends Controller
 						}
 						else if ($task == 'delete') {
 							$category->delete();
+							return redirect()->back()->with(['success' => 'Deleted']);
 						}
 					}
 				}
@@ -212,6 +253,8 @@ class Syslog extends Controller
 			}
 			else {
 				$parent_category = null;
+				$categories = PostCategory::where('name', 'like', '%'.$request->input('search_text').'%')
+												->orderByDesc('created_at')->paginate(5);
 				if (!empty($id)) {
 					$parent_category = PostCategory::find($id);
 					if ($parent_category) {
@@ -219,11 +262,8 @@ class Syslog extends Controller
 												->where('name', 'like', '%'.$request->input('search_text').'%')
 												->orderByDesc('created_at')->paginate(5);
 					}
-				} else {
-					$categories = PostCategory::where('name', 'like', '%'.$request->input('search_text').'%')
-												->orderByDesc('created_at')->paginate(5);
 				}
-		
+
 				return view('admin.categories.'.$action)
 							->with('request', $request)
 							->with('parent_category', $parent_category)
@@ -235,9 +275,101 @@ class Syslog extends Controller
 		}
 	}
 
+	public function posts(Request $request, Client $client, $category_id = null, $action = 'index', $id = null)
+	{
+		if (in_array(Auth::user()->getRole->alias, $this->content_role)) {
+			if (!empty($category_id)) {
+				$category = PostCategory::find($category_id);
+			}
+			if ($request->isMethod('post')) {
+				$task = $request->input('task');
+				if ($action == 'edit') {
+					if (in_array($task, array('save', 'save-edit'))) {
+						$post = Post::firstOrNew(['id' => $id]);
+						$post->user_id = Auth::user()->id;
+						$post->title = $request->input('title');
+						$slug = $this->create_slug($post->title);
+						$post->slug = $slug;
+						$post->description = $request->input('description');
+						$post->category_id = $request->input('category_id');;
+						$post->active = !empty($request->input('active')) ? 1 : 0;
+						$post->save();
+
+						if ($request->hasFile('featured_image')) {
+							if ($request->file('featured_image')->isValid()) {
+								$directory = 'posts/'.$post->id.'/featured_image';
+								Storage::disk('public')->deleteDirectory($directory);
+								$post->featured_image = $request->file('featured_image')->store($directory, 'public');
+							}
+							$post->save();
+						}
+						if ($task == 'save-edit') {
+							return redirect(url()->current());
+						}
+						return redirect(url('/admin/category/'.$category_id.'/posts'))->with(['success' => 'Update Successfully!']);
+					}
+				}
+				else {
+					$ids = $request->input('cid', array());
+					foreach ($ids as $id) {
+						$post = Post::find($id);
+						if ($task == 'orderup') {
+							$post->decrement('order_num');
+							$post->save();
+						}
+						else if ($task == 'orderdown') {
+							$post->increment('order_num');
+							$post->save();
+						}
+						else if ($task == 'delete') {
+							$post->delete();
+						}
+					}
+				}
+			}
+			
+			if ($action == 'edit') {
+				$post = Post::firstOrNew(['id' => $id]);
+				return view('admin.posts.'.$action)
+							->with('request', $request)
+							->with('category', $category)
+							->with('post', $post);
+			}
+			else {
+				$posts = Post::where('title', 'like', '%'.$request->input('search_text').'%')->whereIn('category_id', function ($query) use ($category_id) {
+					$query->select('id')
+						  ->from('post_category')
+						  ->where('id', $category_id)
+						  ->orWhere('parent_id', $category_id);
+				})->orderByDesc('created_at')->paginate(5);
+				$categories = PostCategory::all();
+				return view('admin.posts.'.$action)
+							->with('request', $request)
+							->with('category', $category)
+							->with('categories', $categories)
+							->withMessage('alert error')
+							->with('posts', $posts);
+			}
+		}
+		else {
+			return redirect()->route('syslog')->withErrors('Permission denied!');
+		}
+	}
+
 	public function contact(Request $request, Client $client, $action='index', $id=null)
 	{
 		if (in_array(Auth::user()->getRole->alias, $this->cs_role)) {
+			if ($action == 'download-attach') {
+				if (!empty($id)){
+					$contact = MailDB::find($id);
+					$filePath = storage_path('app/public/'.$contact->attachment);
+					$filename = basename($filePath);
+					$headers = [
+						'Content-Type' => 'application/octet-stream',
+					];
+				}
+				return response()->download($filePath, $filename, $headers);
+			}
 			if ($request->isMethod('post')) {
 				$task = $request->input('task');
 				if ($action == 'edit') {
@@ -266,7 +398,7 @@ class Syslog extends Controller
 						$data = array(
 							'sender' => $reply->sender,
 							'receivers' => $reply->receiver = $contact->sender,
-							'subject' => '[TODC Contact] - '.$contact->name,
+							'subject' => '[VNIM Contact] - '.$contact->subject,
 							'tpl_data'	=> $response_data,
 						);
 
@@ -367,8 +499,14 @@ class Syslog extends Controller
 						$settings->company_name = $request->input('company_name');
 						$settings->company_phone = $request->input('company_phone');
 						$settings->company_email = $request->input('company_email');
+						$settings->hotline_vn = $request->input('hotline_vn');
+						$settings->hotline_en = $request->input('hotline_en');
+						$settings->hotline_usa = $request->input('hotline_usa');
+						$settings->whatsapp = $request->input('whatsapp');
+						$settings->skype = $request->input('skype');
+						$settings->viber = $request->input('viber');
+						$settings->telegram = $request->input('telegram');
 						$settings->company_address = $request->input('company_address');
-						$settings->hr_email = $request->input('hr_email');
 						$settings->cs_email = $request->input('cs_email');
 
 						if ($request->hasFile('logo')) {
@@ -415,4 +553,73 @@ class Syslog extends Controller
 			return redirect()->route('syslog')->withErrors('Permission denied!');
 		}
 	}
+
+	public function banners(Request $request, Client $client, $action='index', $id=null)
+	{
+		if (in_array(Auth::user()->getRole->alias, $this->content_role)) {
+			if ($request->isMethod('post')) {
+				$task = $request->input('task');
+				if ($action == 'edit') {
+					if (in_array($task, array('save', 'save-edit'))) {
+						$banner = Banner::firstOrNew(['id' => $id]);
+						$banner->user_id = Auth::user()->id;
+						$banner->name = $request->input('name');
+						$banner->position = $request->input('position');;
+						$banner->url = $request->input('url') ?? url('/');
+						$banner->active = !empty($request->input('active')) ? 1 : 0;
+						$banner->save();
+
+						if ($request->hasFile('featured_image')) {
+							if ($request->file('featured_image')->isValid()) {
+								$directory = 'banners/'.$banner->id;
+								Storage::disk('public')->deleteDirectory($directory);
+								$banner->image = $request->file('featured_image')->store($directory, 'public');
+							}
+							$banner->save();
+						}
+						if ($task == 'save-edit') {
+							return redirect(url()->current());
+						}
+						return redirect()->route('syslog.banners')->with(['success' => 'Update Successfully!']);
+					}
+				}
+				else {
+					$ids = $request->input('cid', array());
+					foreach ($ids as $id) {
+						$banner = Banner::find($id);
+						if ($task == 'orderup') {
+							$banner->decrement('order_num');
+							$banner->save();
+						}
+						else if ($task == 'orderdown') {
+							$banner->increment('order_num');
+							$banner->save();
+						}
+						else if ($task == 'delete') {
+							$banner->delete();
+						}
+					}
+				}
+			}
+			
+			if ($action == 'edit') {
+				$banner = Banner::firstOrNew(['id' => $id]);
+				return view('admin.banners.'.$action)
+							->with('request', $request)
+							->with('banner', $banner);
+			}
+			else {
+				$banners = Banner::where('name', 'like', '%'.$request->input('search_text').'%')
+									->orWhere('position', 'like', '%'.$request->input('search_text').'%')
+									->orderByDesc('created_at')->paginate(5);
+				return view('admin.banners.'.$action)
+							->with('request', $request)
+							->with('banners', $banners);
+			}
+		}
+		else {
+			return redirect()->route('syslog')->withErrors('Permission denied!');
+		}
+	}
+
 }

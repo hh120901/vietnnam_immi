@@ -7,10 +7,11 @@
 				@csrf
 				<input type="hidden" name="checkedboxcounter" id="checkedboxcounter" value="0">
 				<input type="hidden" id="task" name="task" value="{{ $request->input('task') }}">
-				<div class="pt-5r">
-					<h4 class="ms-5 fw-bold text-red-primary mb-3">Request Contact Us</h4>
+				<input type="hidden" id="index_category" name="index_category" value="{{ !empty($parent_category) ? $parent_category->id : '' }}">
+				<div class="px-5 pt-5r">
+					<h4 class="ms-5 fw-bold text-red-primary mb-3"> Banner Management</h4>
 					<div class="border rounded-3 px-3 py-4 mx-5 bg-white">
-						<div class="d-flex justify-content-between align-items-center">
+						<div class="d-flex flex-wrap justify-content-between align-items-center">
 							<span class="fs-5 fw-semibold">Resources List</span>
 							<div class="input-search-group border rounded-3 d-flex justify-content-center bg-white">
 								<input type="text" class="input-search-resources border-0 small rounded-3 ps-3" value="{{ $request->input('search_text') }}"  placeholder="Search..." name="search_text" id="search_text">
@@ -20,49 +21,40 @@
 							</div>
 						</div>
 						<div class="mt-4 table-responsive">
-							@if(!empty($contacts))
-								<table class="table table-bordered rounded-3 table-management">
+							@if (count($banners))
+								<table class="table table-bordered rounded-3 table-management table-hover">
 									<thead>
 										<tr>
 											<th scope="col">
 												<div class="form-check d-flex justify-content-center">
-													<input class="form-check-input btn-check-all" type="checkbox" value="">
+													<input class="form-check-input btn-check-all" type="checkbox" value="" id="cb">
 												</div>
 											</th>
 											<th class="text-center" scope="col">No</th>
-											<th scope="col">Customer's name</th>
-											<th scope="col">Email</th>
-											<th scope="col">Phone</th>
-											<th scope="col">Attach file</th>
-											<th scope="col">Request Date</th>
+											<th scope="col">Name</th>
+											<th scope="col">Position</th>
+											<th scope="col">Url</th>
 											<th scope="col">Status</th>
 											<th scope="col">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach ($contacts as $i => $contact)
+										@foreach ($banners as $i => $banner)
 											<tr>
 												<th scope="col">
 													<div class="form-check d-flex justify-content-center">
-														<input class="form-check-input checkbox-manage-content" type="checkbox" name="cid[]" value="{{ $contact->id }}" id="cb{{ $contact->id }}">
+														<input class="form-check-input checkbox-manage-content" type="checkbox" value="{{ $banner->id }}" name="cid[]" id="cb{{ $banner->id }}">
 													</div>
 												</th>
 												<th class="text-center" scope="row">{{ $i+1 }}</th>
-												<td>{{ $contact->name }}</td>
-												<td>{{ $contact->sender }}</td>
-												<td>{{ $contact->phone }}</td>
-												<td class="text-nowrap">
-													@if (!empty($contact->attachment))
-														<a href="{{ asset('storage/'.$contact->attachment) }}" target="_blank">View</a>
-														<a href="{{ url('/admin/contact/download-attach/'.$contact->id) }}" target="_blank" class="ms-2 download-cv" data-download-id="{{ $contact->id }}"><img src="{{ asset('assets/images/old_img/icon-download.svg') }}" alt=""></a>
-													@endif
-												</td>
-												<td>{{ $contact->created_at->format('d-m-Y H:i:s') }}</td>
-												<td class="post-status {{ $contact->active == 1 ? 'active' : '' }}">{{ $contact->active == 1 ? 'Processed' : 'Unread' }}</td>
+												<td>{{ $banner->name }}</td>
+												<td>{{ $banner->position }}</td>
+												<td>{{ $banner->url }}</td>
+												<td class="post-status {{ $banner->active == 1 ? 'active' : '' }}">{{ $banner->active == 1 ? 'Activated' : 'Deactivated' }}</td>
 												<td class="">
 													<div class="d-flex align-items-center">
-														<a href="{{ url('/admin/contact/edit/'.$contact->id) }}" class="me-3"><img src="{{ asset('assets/images/old_img/icon-eye.svg') }}" alt=""></a>
-														<a role="button" onclick="return confirmBox('Delete items', 'Are you sure you want to delete the selected items?', 'itemTask', ['{{ $contact->id }}', 'delete'])"><img src="{{ asset('assets/images/old_img/icon-trash.svg') }}"" alt=""></a>
+														<a href="{{ url('/admin/banners/edit/'.$banner->id) }}" class="me-3"><img src="{{ asset('assets/images/old_img/icon-eye.svg') }}" alt=""></a>
+														<a role="button" onclick="return confirmBox('Delete items', 'Are you sure you want to delete the selected items?', 'itemTask', ['{{ $banner->id }}', 'delete'])"><img src="{{ asset('assets/images/old_img/icon-trash.svg') }}"" alt=""></a>
 													</div>
 												</td>
 											</tr>
@@ -72,11 +64,14 @@
 							@endif
 							<div class="d-flex justify-content-between mt-4 flex-wrap">
 								<div class="custom-pagination">
-									{{ $contacts->render() }}
+									{{ $banners->render() }}
 								</div>
 								<div class="d-flex gap-3">
 									<a class="btn btn-outline-red-400 fw-semibold btn-remove-post me-3 btn-delete">
 										Delete
+									</a>
+									<a href="{{ url('/admin/banners/edit') }}" class="btn btn-red-400 btn-add-post">
+										Add new
 									</a>
 								</div>
 							</div>

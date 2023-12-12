@@ -3,7 +3,7 @@
 @section('content')
 	<div class="mb-5">
 		<h2 class="fs-2 text-red-primary mb-4">Notification - New Customer Inquiry Received</h2>
-		<p class="mb-3">Dear <strong>The One Digi Corp</strong>,</p>
+		<p class="mb-3">Dear <strong>Vietnam-Immi.org.vn</strong>,</p>
 		<p class="mb-3">
 			I hope you're having a great day. I'd like to inform you that we have just received a new request from a customer. Here are the details of the request:
 		</p>
