@@ -33,7 +33,7 @@
 								</div>
 							@endforeach					
 						</div>
-						<div>
+						<div class="mb-4">
 							{{ $posts->render() }}
 						</div>
 					@endif
