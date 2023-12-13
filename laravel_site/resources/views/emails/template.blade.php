@@ -87,9 +87,9 @@
 			<p class="mb-3"><strong>Email: </strong>{{ $settings->hr_email }}</p>
 		</div>
 		<div class="social-icon d-flex" style="gap: 1rem">
-			<a href="#" style="margin-right: 1rem"><img class="social-icon" src="{{ asset('assets/images/icon-social/fb.png') }}" alt="FB"></a>
-			<a href="#" style="margin-right: 1rem"><img class="social-icon" src="{{ asset('assets/images/icon-social/x.png') }}" alt="X"></a>
-			<a href="#" style="margin-right: 1rem"><img class="social-icon" src="{{ asset('assets/images/icon-social/linkind.png') }}" alt="IN"></a>
+			<a href="#" style="margin-right: 1rem"><img class="social-icon" src="{{ asset('assets/images/old_img/icon-social/fb.png') }}" alt="FB"></a>
+			<a href="#" style="margin-right: 1rem"><img class="social-icon" src="{{ asset('assets/images/old_img/icon-social/x.png') }}" alt="X"></a>
+			<a href="#" style="margin-right: 1rem"><img class="social-icon" src="{{ asset('assets/images/old_img/icon-social/linkind.png') }}" alt="IN"></a>
 		</div>	
 	</div>
 </body>

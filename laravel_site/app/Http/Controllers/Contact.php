@@ -69,6 +69,6 @@ class Contact extends Controller
 			return redirect()->back()->with(['success' => 'Sent Email Successfully!']);
 		}
         
-        return view('contact')->with('settings', $settings);
+        return view('contact')->with('settings', $settings)->with('request', $request);
 	}
 }

@@ -1,6 +1,8 @@
 @php
 	$settings = \App\Models\Setting::first();
 	$banner = \App\Models\Banner::where('position', 'header')->first();
+	$services_cat = \App\Models\PostCategory::where('alias', 'services')->first();
+	$services_children = \App\Models\PostCategory::where('parent_id', $services_cat->id)->get();
 @endphp
 <header class="mb-5">
 	<div class="site-banner mb-3 container">
@@ -38,11 +40,9 @@
 								Services
 								</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item drop-link" href="#">Visa</a></li>
-									<li><a class="dropdown-item drop-link" href="#">5 Years</a></li>
-									<li><a class="dropdown-item drop-link" href="#">Airport Services</a></li>
-									<li><a class="dropdown-item drop-link" href="#">E sim</a></li>
-									<li><a class="dropdown-item drop-link" href="#">Extend Visa</a></li>
+									@foreach ($services_children as $services_child)
+										<li><a class="dropdown-item drop-link" href="{{ url('/'.$services_child->alias) }}">{{ $services_child->name }}</a></li>
+									@endforeach
 								</ul>
 							</li>
 							<li class="nav-item">
@@ -56,9 +56,10 @@
 								<a class="nav-link" href="{{ url('/contact') }}">Contact</a>
 							</li>
 						</ul>
-						<form class="d-flex" role="search">
+						<form class="d-flex" action="{{ url('/search') }}" method="POST" role="search">
+							@csrf
 							<div class="search-input d-flex border border-white rounded-2 me-lg-4">
-								<input class="me-2 bg-red-primary ps-4 text-white border-0 rounded-2" type="search" placeholder="Search" aria-label="Search">
+								<input class="me-2 bg-red-primary ps-4 text-white border-0 rounded-2" name="search_text" id="search_text" type="search" placeholder="Search" aria-label="Search" value="{{ $request->input('search_text') }}">
 								<button class="btn py-1" type="submit"><i class="fal fa-search fs-4"></i></button>
 							</div>
 						</form>

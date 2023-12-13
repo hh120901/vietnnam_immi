@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::any('/', [App\Http\Controllers\Home::class, 'index'])->name('home');
 Route::any('/contact', [App\Http\Controllers\Contact::class, 'index'])->name('contact');
-
-Route::get('/post-details', function () {
-    return view('post_details');
-});
+Route::any('/search', [App\Http\Controllers\SearchPost::class, 'index'])->name('contact');
 
 Route::any('/admin', [App\Http\Controllers\Admin\Syslog::class, 'index'])->name('syslog');
 Route::any('/admin/login', [App\Http\Controllers\Admin\Syslog::class, 'login'])->name('syslog.login');
@@ -37,4 +34,5 @@ Route::any('/admin/roles', [App\Http\Controllers\Admin\Syslog::class, 'roles'])-
 Route::any('/admin/roles/{action}/{id?}', [App\Http\Controllers\Admin\Syslog::class, 'roles'])->name('syslog.roles.{action}.{id}');
 Route::any('/admin/settings/{action}/{id?}', [App\Http\Controllers\Admin\Syslog::class, 'settings'])->name('syslog.settings');
 Route::any('/{alias}/{post_slug?}', [App\Http\Controllers\ShowCategory::class, 'index'])->name('category.{alias}.{post_slug}');
+
 

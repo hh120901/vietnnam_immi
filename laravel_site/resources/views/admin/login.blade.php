@@ -23,10 +23,7 @@
 						<div class="h-100 pt-md-0 d-flex justify-content-center align-items-center">
 							<div>
 								<div class="d-flex mb-4 justify-content-center align-items-center">
-									<div class="ratio ratio-1x1" style="width: 100px; height: 100px">
-										<img src="{{ asset('storage/'.$settings->logo) }}" alt="logo">
-									</div>
-									<h2 class="fw-bold text-danger fs-1 ms-5 mb-0">Vietnam <br> Immi.org</h2>
+									<h2 class="fw-bold text-danger fs-1 mb-0">Vietnam-Immi.org.vn</h2>
 								</div>
 								<div class="mb-4 text-center">
 									<strong class="my-3 fs-2 fw-semibold">Login</strong>

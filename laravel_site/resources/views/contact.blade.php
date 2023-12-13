@@ -61,7 +61,7 @@
 								<div class="drop-zone">
 									<div class="d-flex flex-column justify-content-center align-items-center border rounded-1 py-4">
 										<p class="mb-2"><i class="fal fa-file-upload fs-4"></i></p>
-										<p class="fw-semibold mb-0 mx-3">Drag or click here to upload your resume (Maximum size: 2MB)</p>
+										<p class="fw-semibold mb-0 mx-3">Drag or click here to upload your file (Maximum size: 2MB)</p>
 									</div>
 								</div>
 								<p class="file-name my-3 fw-semibold text-success"></p>

@@ -50,6 +50,10 @@
 					<span class="d-flex align-items-center mb-3"><i class="fal fa-image fs-4 me-2"></i>Ads management</span>
 						<li class="management-item"><a class="management-link" href="{{ url('/admin/banners/') }}">Banners</a></li>
 				</ul>
+				<ul class="group-management mt-2 {{ in_array($user->getRole->alias, $admin_role) ? '' : 'd-none' }}">
+					<span class="d-flex align-items-center mb-3"><i class="fal fa-cogs fs-4 me-2"></i>Site Managements</span>
+						<li class="management-item"><a class="management-link" href="{{ url('/admin/settings/edit') }}">Settings</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

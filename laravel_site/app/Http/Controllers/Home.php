@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class Home extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         $homeBanners = Banner::where('position', 'homepage')->where('active', 1)->get();
         $travel_news = PostCategory::where('alias', 'travel-news')->first();
@@ -26,6 +26,6 @@ class Home extends Controller
         $visa_airport_news_posts = Post::where('category_id', $visa->id)->orWhere('category_id', $airport_services->id)->where('active', 1)->orderByDesc('created_at')->limit(5)->get();
         $visa_airport_news_posts->{$visa->id} = $visa;
         $visa_airport_news_posts->{$airport_services->id} = $airport_services;
-        return view('home')->with('homeBanners', $homeBanners)->with('travel_news_posts', $travel_news_posts)->with('visa_airport_news_posts', $visa_airport_news_posts);
+        return view('home')->with('homeBanners', $homeBanners)->with('travel_news_posts', $travel_news_posts)->with('visa_airport_news_posts', $visa_airport_news_posts)->with('request', $request);
     }
 }

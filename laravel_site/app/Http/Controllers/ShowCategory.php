@@ -24,7 +24,8 @@ class ShowCategory extends Controller
 						  ->where('id', $category->id)
 						  ->orWhere('parent_id', $category->id);
 				})->where('id','<>', $post->id)->where('active', 1)->orderByDesc('created_at')->paginate(5);
-				return view('post_details')->with('post', $post)->with('other_posts', $other_posts);
+				// $other_posts = Post::orderByDesc('created_at')->paginate(10);
+				return view('post_details')->with('post', $post)->with('other_posts', $other_posts)->with('request', $request);
 			} 
 			else 
 			{
@@ -34,7 +35,7 @@ class ShowCategory extends Controller
 						  ->where('id', $category->id)
 						  ->orWhere('parent_id', $category->id);
 				})->where('active', 1)->orderByDesc('created_at')->paginate(4);
-				return view('category_details')->with('category', $category)->with('posts', $posts);
+				return view('category_details')->with('category', $category)->with('posts', $posts)->with('request', $request);
 			}
 		} 
 		else {

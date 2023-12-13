@@ -24,10 +24,8 @@
 									<li class="mb-3"><a class="text-second fw-medium text-oneline" href="{{ url('/'.$post->cat_alias.'/'.$o_post->slug) }}">{{ $o_post->title }}</a></li>
 								@endforeach
 							</ol>
-							<div class="d-flex justify-content-end">
-								<a type="button" class="text-secondary add-more-links fw-bold">
-									More links
-								</a>
+							<div class="d-flex mb-4">
+								{{ $other_posts->render(); }}
 							</div>
 						</div>
 					</div>
